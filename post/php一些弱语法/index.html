@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Msfconsole | Zhangzhiyang的博客</title>
+    <title> | Zhangzhiyang的博客</title>
 
     
 <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -19,24 +19,23 @@
 
 <meta name="generator" content="Hugo 0.76.3" />
 
-<link rel="canonical" href="https://geekzzy.github.io/post/msf/" />
+<link rel="canonical" href="https://geekzzy.github.io/post/php%E4%B8%80%E4%BA%9B%E5%BC%B1%E8%AF%AD%E6%B3%95/" />
 
 
-<meta property="og:title" content="Msfconsole" />
-<meta property="og:description" content="" />
+<meta property="og:title" content="" />
+<meta property="og:description" content="php的一些语法漏洞 0x00 比较符号 == 执行关系运算时要求运算符两边的数据类型必须一致,强制转换数据类型 数字转换规则： 若字符串以数字开头，则取开头数" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://geekzzy.github.io/post/msf/" />
-<meta property="og:image" content="https://geekzzy.github.io/img/7.jpg" />
-<meta property="article:published_time" content="2019-08-13T09:39:50+00:00" />
-<meta property="article:modified_time" content="2019-08-13T09:39:50+00:00" />
+<meta property="og:url" content="https://geekzzy.github.io/post/php%E4%B8%80%E4%BA%9B%E5%BC%B1%E8%AF%AD%E6%B3%95/" />
+<meta property="og:image" content="https://geekzzy.github.io/me/background.jpg"/>
+
 
 
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://geekzzy.github.io/img/7.jpg"/>
+<meta name="twitter:image" content="https://geekzzy.github.io/me/background.jpg"/>
 
-<meta name="twitter:title" content="Msfconsole"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="php的一些语法漏洞 0x00 比较符号 == 执行关系运算时要求运算符两边的数据类型必须一致,强制转换数据类型 数字转换规则： 若字符串以数字开头，则取开头数"/>
 
 
 <link rel="stylesheet" href="/css/semantic.min.css" />
@@ -111,14 +110,10 @@
 <div class="ui centered relaxed grid dream-grid">
   <div class="sixteen wide mobile sixteen wide tablet twelve wide computer column markdown-body dream-single" id="dream-save-post-as-img">
     
-    <section class="ui top attached segment cover">
-      <div class="cover-img" style="background-image: url(/img/7.jpg);"></div>
-    </section>
-    
     <section class="ui attached segment">
       <header>
         <h1 class="ui large header">
-          Msfconsole
+          
           <div class="sub header">
             @
             
@@ -126,296 +121,106 @@
             
 
             · 
-                Tuesday, Aug 13, 2019
+                Monday, Jan 1, 0001
               
 
-            · 3 minute read
+            · 2 minute read
 
             · Update at
               
-                Tuesday, Aug 13, 2019
+                Monday, Jan 1, 0001
               
           </div>
         </h1>
       </header>
 
-      <article style="margin-top: 2rem;"><h2 id="0x00-introduction">0x00 Introduction</h2>
-<h3 id="location">location</h3>
+      <article style="margin-top: 2rem;"><h2 id="php的一些语法漏洞">php的一些语法漏洞</h2>
+<h3 id="0x00-比较符号">0x00 比较符号</h3>
+<h4 id="heading">==</h4>
+<p>执行关系运算时要求运算符两边的数据类型必须一致,强制转换数据类型
+数字转换规则：</p>
 <ul>
-<li>/usr/share/metasploit-framework/</li>
+<li>若字符串以数字开头，则取开头数字作为转换结果，若无则输出0</li>
+<li>若字符串形如(1e8),转换为科学计数法1*10^8</li>
+<li>若字符串是任意进制整数，转换为十进制整数</li>
 </ul>
-<h3 id="interface">interface</h3>
-<ul>
-<li>msfconsole：
-终端接口，非常常用，几乎能处理所有事情</li>
-<li>msfvenom：
-payload生成接口，用来生成木马,反弹shell</li>
-<li><del>msfcil</del>：
-命令行接口，已删除，通过msfconsole -x调用</li>
-<li>armitage：
-图形化界面接口，使用前需启动数据库(systemctl start postgresql)</li>
-</ul>
-<h3 id="moudle">moudle</h3>
-<table>
-<thead>
-<tr>
-<th>模块</th>
-<th>作用</th>
-<th>路径</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>auxiliary</td>
-<td>辅助模块，主要做一些信息收集和暴力破解的工作</td>
-<td>modules/auxiliary</td>
-</tr>
-<tr>
-<td>exploits</td>
-<td>渗透攻击模块，发现安全漏洞，利用payload进行攻击</td>
-<td>modules/exploits</td>
-</tr>
-<tr>
-<td>payloads</td>
-<td>漏洞利用模块，渗透攻击成功后植入shellcode，获取shell</td>
-<td>modules/payloads</td>
-</tr>
-<tr>
-<td>encoders</td>
-<td>编码器模块，删除坏字符，免杀</td>
-<td>modules/encoders</td>
-</tr>
-<tr>
-<td>post</td>
-<td>后渗透模块</td>
-<td>modules/post</td>
-</tr>
-<tr>
-<td>nops</td>
-<td>空指令模块</td>
-<td>modules/nops</td>
-</tr>
-<tr>
-<td>evasion</td>
-<td>免杀模块</td>
-<td>modules/evasion</td>
-</tr>
-</tbody>
-</table>
-<h2 id="0x01-database">0x01 Database</h2>
-<h3 id="postgresql">postgresql</h3>
-<blockquote>
-<p>psql是msf框架的默认数据库，默认库名为msf，(配置文件：/etc/postgresql/11/main/pstgresql)</p>
-</blockquote>
-<pre><code>root@kali:~# service postgresql start    //启动postgresql
-root@kali:~# service postgresql status   //检查状态
-● postgresql.service - PostgreSQL RDBMS
-   Loaded: loaded (/lib/systemd/system/postgresql.service; disabled; vendor pres
-   Active: active (exited) since Thu 2020-03-19 11:40:37 CST; 1h 31min ago
-  Process: 1546 ExecStart=/bin/true (code=exited, status=0/SUCCESS)
- Main PID: 1546 (code=exited, status=0/SUCCESS)
-
-3月 19 11:40:37 kali systemd[1]: Starting PostgreSQL RDBMS...
-3月 19 11:40:37 kali systemd[1]: Started PostgreSQL RDBMS.
-root@kali:~# 
-root@kali:~# sudo -u postgres psql      //赋予postgres用户root权限并执行psql
-psql (11.5 (Debian 11.5-1))             //进入数据库
-输入 &quot;help&quot; 来获取帮助信息.
-
-postgres=# alter user postgres password '123456'  //更改密码为123456
-postgres-# \q                           //退出
-</code></pre><h3 id="msfdb">msfdb</h3>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>msfdb init</code></td>
-<td>启动并初始化数据库</td>
-</tr>
-<tr>
-<td><code>msfdb reinit</code></td>
-<td>删除并重新初始化数据库</td>
-</tr>
-<tr>
-<td><code>msfbd delet</code></td>
-<td>删除数据库并关闭数据库</td>
-</tr>
-<tr>
-<td><code>msfdb start</code></td>
-<td>启动数据库</td>
-</tr>
-<tr>
-<td><code>msfdb stop</code></td>
-<td>关闭数据库</td>
-</tr>
-<tr>
-<td><code>msfdb status</code></td>
-<td>查看数据库运行状态</td>
-</tr>
-<tr>
-<td><code>msfdb run</code></td>
-<td>启动数据库并运行msfconsole</td>
-</tr>
-</tbody>
-</table>
-<h2 id="0x02-msfconsole">0x02 msfconsole</h2>
-<h3 id="elementary-command">elementary command</h3>
-<ul>
-<li><code>help/?</code>： 显示msfconsole可以使用的命令及用法</li>
-<li><code>connect</code>：msf中的nc命令</li>
-<li><code>set|unset</code>：设置|取消参数</li>
-<li><code>save</code>：保存设置参数</li>
-<li><code>check</code>：检查目标是否存在漏洞</li>
-<li><code>run/exploit(-j)</code>：开始使用模块</li>
-<li><code>sessions(-i id)</code>：查看当前已经建立的sessions(shell)</li>
-<li><code>load|unload</code>：调用外部的扫描器</li>
-<li><code>back|exit</code>：回到|退出msfconsole</li>
-<li><code>info</code>：查看模块的信息</li>
-</ul>
-<pre><code>msf5 &gt; info exploit/windows/smb/ms08_067_netapi
-</code></pre><ul>
-<li><code>use</code>：使用模块</li>
-</ul>
-<pre><code>msf5 &gt; use exploit/windows/smb/ms08_067_netapi
-</code></pre><ul>
-<li><code>search</code>：查找模块具体位置，可指定关键字(name,path,author&hellip;)</li>
-</ul>
-<pre><code>msf5 &gt; search name:mysql
-
-Matching Modules
-================
-
-   #   Name                                               Disclosure Date  Rank       Check  Description
-   -   ----                                               ---------------  ----       -----  -----------
-   0   auxiliary/admin/mysql/mysql_enum                                    normal     No     MySQL Enumeration Module
-   1   auxiliary/admin/mysql/mysql_sql                                     normal     No     MySQL SQL Generic Query
-   2   auxiliary/analyze/jtr_mysql_fast                                    normal     No     John the Ripper MySQL Password Cracker (Fast Mode)
-   3   auxiliary/scanner/mysql/mysql_authbypass_hashdump  2012-06-09       normal     Yes    MySQL Authentication Bypass Password Dump
-   4   auxiliary/scanner/mysql/mysql_file_enum                             normal     Yes    MYSQL File/Directory Enumerator
-   5   auxiliary/scanner/mysql/mysql_hashdump                              normal     Yes    MYSQL Password Hashdump
-   6   auxiliary/scanner/mysql/mysql_login                                 normal     Yes    MySQL Login Utility
-   7   auxiliary/scanner/mysql/mysql_schemadump                            normal     Yes    MYSQL Schema Dump
-   8   auxiliary/scanner/mysql/mysql_version                               normal     Yes    MySQL Server Version Enumeration
-   9   auxiliary/scanner/mysql/mysql_writable_dirs                         normal     Yes    MYSQL Directory Write Test
-   10  auxiliary/server/capture/mysql                                      normal     No     Authentication Capture: MySQL
-   11  exploit/linux/mysql/mysql_yassl_getname            2010-01-25       good       No     MySQL yaSSL CertDecoder::GetName Buffer Overflow
-   12  exploit/linux/mysql/mysql_yassl_hello              2008-01-04       good       No     MySQL yaSSL SSL Hello Message Buffer Overflow
-   13  exploit/multi/mysql/mysql_udf_payload              2009-01-16       excellent  No     Oracle MySQL UDF Payload Execution
-   14  exploit/windows/mysql/mysql_mof                    2012-12-01       excellent  Yes    Oracle MySQL for Microsoft Windows MOF Execution
-   15  exploit/windows/mysql/mysql_start_up               2012-12-01       excellent  Yes    Oracle MySQL for Microsoft Windows FILE Privilege Abuse
-   16  exploit/windows/mysql/mysql_yassl_hello            2008-01-04       average    No     MySQL yaSSL SSL Hello Message Buffer Overflow
-   17  exploit/windows/mysql/scrutinizer_upload_exec      2012-07-27       excellent  Yes    Plixer Scrutinizer NetFlow and sFlow Analyzer 9 Default MySQL Credential
-</code></pre><h3 id="database-command">database command</h3>
-<table>
-<thead>
-<tr>
-<th>command</th>
-<th>effect</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>db_connect</code></td>
-<td>连接数据库</td>
-</tr>
-<tr>
-<td><code>db_disconnect</code></td>
-<td>断开数据库</td>
-</tr>
-<tr>
-<td><code>db_status</code></td>
-<td>查看msf有无连接数据库</td>
-</tr>
-<tr>
-<td><code>db_rebuild_cache</code></td>
-<td>将模块信息写入数据库，便于查询</td>
-</tr>
-<tr>
-<td><code>db_nmap</code></td>
-<td>调用nmap并保存到数据库</td>
-</tr>
-<tr>
-<td><code>db_import</code></td>
-<td>数据库导入</td>
-</tr>
-<tr>
-<td><code>db_export</code></td>
-<td>数据库导出</td>
-</tr>
-<tr>
-<td><code>db_remove</code></td>
-<td>数据库删除</td>
-</tr>
-<tr>
-<td><code>db_save</code></td>
-<td>数据库保存</td>
-</tr>
-</tbody>
-</table>
-<h3 id="show-command">show command</h3>
-<table>
-<thead>
-<tr>
-<th>command</th>
-<th>effect</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>show </code></td>
-<td>展示指定模块下的所有文件</td>
-</tr>
-<tr>
-<td><code>show options</code></td>
-<td>展示模块的选项参数</td>
-</tr>
-<tr>
-<td><code>show all</code></td>
-<td>展示所有</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><code>show targets</code></td>
-<td>展示目标主机</td>
-</tr>
-<tr>
-<td><code>show advanced</code></td>
-<td>展示模块的高级选项参数</td>
-</tr>
-<tr>
-<td><code>show missing</code></td>
-<td>查看没有被设置的必需选项</td>
-</tr>
-<tr>
-<td><code>show plugins</code></td>
-<td>展示插件</td>
-</tr>
-<tr>
-<td><code>show info</code></td>
-<td>展示模块信息</td>
-</tr>
-<tr>
-<td><code>show actions</code></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2 id="0x02-msfvenom">0x02 Msfvenom</h2></article>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$num<span style="color:#f92672">=</span>$_GET[<span style="color:#e6db74">&#39;num&#39;</span>];<span style="color:#75715e">//?num=1abc
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span><span style="color:#a6e22e">is_numeric</span>($num)){
+<span style="color:#66d9ef">echo</span> $num;
+<span style="color:#66d9ef">if</span>($num<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;flag{**********}&#39;</span>;
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span> <span style="color:#75715e">//输入什么都成立
+</span><span style="color:#75715e"></span>$a<span style="color:#f92672">=</span>$_GET[<span style="color:#e6db74">&#39;a&#39;</span>];  
+<span style="color:#66d9ef">if</span> ($a<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>){<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;1&#34;</span>;}
+</code></pre></div><h4 id="heading-1">===</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">isset</span>($_GET[<span style="color:#e6db74">&#39;name&#39;</span>]) <span style="color:#66d9ef">and</span> <span style="color:#a6e22e">isset</span>($_GET[<span style="color:#e6db74">&#39;password&#39;</span>])){
+    <span style="color:#66d9ef">if</span> ($_GET[<span style="color:#e6db74">&#39;name&#39;</span>] <span style="color:#f92672">==</span> $_GET[<span style="color:#e6db74">&#39;password&#39;</span>]){
+        <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;Your password can not be your name.&#39;</span>;
+    }<span style="color:#75715e">//判断全等于操作符2边的数据类型是否相同 如果不相同，则返回false
+</span><span style="color:#75715e"></span>     <span style="color:#75715e">//判断全等于操作符2边的值是否相等，如果不相等，则返回false
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">sha1</span>($_GET[<span style="color:#e6db74">&#39;name&#39;</span>]) <span style="color:#f92672">===</span> <span style="color:#a6e22e">sha1</span>($_GET[<span style="color:#e6db74">&#39;password&#39;</span>])){
+        <span style="color:#66d9ef">die</span>(<span style="color:#e6db74">&#39;Flag: &#39;</span><span style="color:#f92672">.</span>$flag);<span style="color:#75715e">//使用数组?name[]=1&amp;password[]=2,俩边都是数组为Flase，相等
+</span><span style="color:#75715e"></span>    }
+    <span style="color:#66d9ef">else</span>{<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;Invalid password&#39;</span>;}
+}
+</code></pre></div><h3 id="0x01-函数">0x01 函数</h3>
+<h4 id="strcmp">strcmp()</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+$password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;***************&#34;</span>;
+<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">isset</span>($_POST[<span style="color:#e6db74">&#39;password&#39;</span>])){ <span style="color:#75715e">//strcmp函数，比较俩个字符串
+</span><span style="color:#75715e"></span>     <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">strcmp</span>($_POST[<span style="color:#e6db74">&#39;password&#39;</span>], $password) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){ <span style="color:#75715e">//传值用数组password[]=1,绕过
+</span><span style="color:#75715e"></span>          <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;Right!!!login success&#34;</span>;
+    }<span style="color:#66d9ef">else</span>{<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;Wrong password..&#34;</span>;}
+}
+</code></pre></div><h4 id="ereg">ereg()</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">isset</span> ($_GET[<span style="color:#e6db74">&#39;password&#39;</span>])) {
+	<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">ereg</span>(<span style="color:#e6db74">&#34;^[a-zA-Z0-9]+$&#34;</span>, $_GET[<span style="color:#e6db74">&#39;password&#39;</span>]) <span style="color:#f92672">===</span> <span style="color:#66d9ef">FALSE</span>){	
+		<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;p&gt;You password must be alphanumeric&lt;/p&gt;&#39;</span>;
+	} <span style="color:#75715e">//ereg()存在%00截断漏洞
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">strlen</span>($_GET[<span style="color:#e6db74">&#39;password&#39;</span>]) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">8</span> <span style="color:#f92672">&amp;&amp;</span> $_GET[<span style="color:#e6db74">&#39;password&#39;</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">9999999</span>){
+		<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">strpos</span> ($_GET[<span style="color:#e6db74">&#39;password&#39;</span>], <span style="color:#e6db74">&#39;*-*&#39;</span>) <span style="color:#f92672">!==</span> <span style="color:#66d9ef">FALSE</span>){
+			<span style="color:#66d9ef">die</span>(<span style="color:#e6db74">&#39;Flag: &#39;</span> <span style="color:#f92672">.</span>$flag);
+		}<span style="color:#75715e">//使用科学计数法绕过strpos(),?possword=1e9%00*-*
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">else</span>{<span style="color:#66d9ef">echo</span>(<span style="color:#e6db74">&#39;&lt;p&gt;*-* have not been found&lt;/p&gt;&#39;</span>);}
+	}
+	<span style="color:#66d9ef">else</span>{<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;p&gt;Invalid password&lt;/p&gt;&#39;</span>;}
+}
+</code></pre></div><h4 id="is_numeric">is_numeric()</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+$a<span style="color:#f92672">=</span>$_GET[<span style="color:#e6db74">&#39;a&#39;</span>];
+$b<span style="color:#f92672">=</span>$_GET[<span style="color:#e6db74">&#39;b&#39;</span>]; <span style="color:#75715e">//当有两个is_numeric判断并用and连接时，and后面的is_numeric可以绕过
+</span><span style="color:#75715e"></span>$c<span style="color:#f92672">=</span><span style="color:#a6e22e">is_numeric</span>($a) <span style="color:#66d9ef">and</span> <span style="color:#a6e22e">is_numeric</span>($b); <span style="color:#75715e">//先执行$c=is_numeric($a)得真
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span>($c){ <span style="color:#75715e">//然后执行is_numeric($a) and is_numeric($b)，但是这时候$c已经被赋值为真了
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;success&#39;</span>;
+}
+</code></pre></div><h3 id="算法">算法</h3>
+<h4 id="md5">MD5</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+$a <span style="color:#f92672">=</span> $_GET[<span style="color:#e6db74">&#39;a&#39;</span>]; 
+$b <span style="color:#f92672">=</span> $_GET[<span style="color:#e6db74">&#39;b&#39;</span>]; 
+<span style="color:#66d9ef">if</span> ($a <span style="color:#f92672">!=</span> $b){  <span style="color:#75715e">//利用==符号的强制转换原理
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">md5</span>($a) <span style="color:#f92672">==</span> <span style="color:#a6e22e">md5</span>($b)){ <span style="color:#75715e">//s878926199a   s155964671a   s214587387a
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;666&#39;</span>;
+    } 
+}
+</code></pre></div><h4 id="sha1">Sha1</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+$a <span style="color:#f92672">=</span> $_GET[<span style="color:#e6db74">&#39;a&#39;</span>]; 
+$b <span style="color:#f92672">=</span> $_GET[<span style="color:#e6db74">&#39;b&#39;</span>]; 
+<span style="color:#66d9ef">if</span> ($a <span style="color:#f92672">!=</span> $b){  <span style="color:#75715e">//aaroZmOk  aaK1STfY  aaO8zKZF
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">sha1</span>($a) <span style="color:#f92672">==</span> <span style="color:#a6e22e">sha1</span>($b)){
+        <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;666&#39;</span>;
+    } 
+}
+</code></pre></div></article>
     </section>
 
     <footer class="ui attached segment dream-tags" data-html2canvas-ignore>
       
-        
-          <a class="ui label" href="/tags/cyber-security" title="cyber-security">cyber-security</a>
-        
+          <a class="ui label">No Tags</a>
       
       <div
         class="ui label"
@@ -439,8 +244,8 @@ Matching Modules
 
 
           var disqus_config = function () {
-            this.page.url = 'https:\/\/geekzzy.github.io\/post\/msf\/';  
-            this.page.identifier = '\/post\/msf\/'; 
+            this.page.url = 'https:\/\/geekzzy.github.io\/post\/php%E4%B8%80%E4%BA%9B%E5%BC%B1%E8%AF%AD%E6%B3%95\/';  
+            this.page.identifier = '\/post\/php%E4%B8%80%E4%BA%9B%E5%BC%B1%E8%AF%AD%E6%B3%95\/'; 
           };
 
           (function() { 
@@ -978,7 +783,7 @@ code.has-jax {
 
 
             var disqus_config = function () {
-              this.page.url = 'https:\/\/geekzzy.github.io\/post\/msf\/';  
+              this.page.url = 'https:\/\/geekzzy.github.io\/post\/php%E4%B8%80%E4%BA%9B%E5%BC%B1%E8%AF%AD%E6%B3%95\/';  
               this.page.identifier = '/'; 
             };
 

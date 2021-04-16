@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>php on Zhangzhiyang的博客</title>
-    <link>https://www.geekyang.top/tags/php/</link>
+    <link>https://geekzzy.github.io/tags/php/</link>
     <description>Recent content in php on Zhangzhiyang的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;&lt;img alt=&#34;知识共享许可协议&#34; style=&#34;border-width:0&#34; src=&#34;https://www.geekyang.top/img/404.jpg&#34; /&gt;&lt;/a&gt;&lt;br /&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。</copyright>
-    <lastBuildDate>Tue, 13 Aug 2019 09:39:50 +0000</lastBuildDate><atom:link href="https://www.geekyang.top/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;&lt;img alt=&#34;知识共享许可协议&#34; style=&#34;border-width:0&#34; src=&#34;https://geekzzy.github.io/img/404.jpg&#34; /&gt;&lt;/a&gt;&lt;br /&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。</copyright>
+    <lastBuildDate>Tue, 13 Aug 2019 09:39:50 +0000</lastBuildDate><atom:link href="https://geekzzy.github.io/tags/php/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SQL_injection</title>
-      <link>https://www.geekyang.top/post/sql-injection/</link>
+      <link>https://geekzzy.github.io/post/sql-injection/</link>
       <pubDate>Tue, 13 Aug 2019 09:39:50 +0000</pubDate>
       
-      <guid>https://www.geekyang.top/post/sql-injection/</guid>
+      <guid>https://geekzzy.github.io/post/sql-injection/</guid>
       <description>&lt;p&gt;东风夜放花千树，更吹落，星如雨。&lt;br&gt;
 宝马雕车香满路。凤箫声动，玉壶光转，一夜鱼龙舞。&lt;br&gt;
 蛾儿雪柳黄金缕。笑语盈盈暗香去。&lt;br&gt;
@@ -22,10 +22,10 @@
     
     <item>
       <title>伪协议与文件包含</title>
-      <link>https://www.geekyang.top/post/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/</link>
+      <link>https://geekzzy.github.io/post/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/</link>
       <pubDate>Tue, 13 Aug 2019 09:39:50 +0000</pubDate>
       
-      <guid>https://www.geekyang.top/post/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/</guid>
+      <guid>https://geekzzy.github.io/post/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/</guid>
       <description>&lt;p&gt;宠辱不惊，闲看庭前花开花落。&lt;br&gt;
 去留无意，漫随天外云卷云舒。&lt;/p&gt;</description>
     </item>
