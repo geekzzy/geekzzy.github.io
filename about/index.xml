@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Abouts on 乐此不疲</title>
+    <link>https://geekzzy.github.io/about/</link>
+    <description>Recent content in Abouts on 乐此不疲</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>copyright</copyright>
+    <lastBuildDate>Sun, 11 Oct 2020 15:21:48 +0800</lastBuildDate><atom:link href="https://geekzzy.github.io/about/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Me</title>
+      <link>https://geekzzy.github.io/about/me/</link>
+      <pubDate>Sun, 11 Oct 2020 15:21:48 +0800</pubDate>
+      
+      <guid>https://geekzzy.github.io/about/me/</guid>
+      <description>&lt;p&gt;Cut out summary from your post content here.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
