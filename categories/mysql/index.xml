@@ -2,30 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>mysql on Zhangzhiyang的博客</title>
-    <link>https://geekzzy.github.io/categories/mysql/</link>
+    <link>/categories/mysql/</link>
     <description>Recent content in mysql on Zhangzhiyang的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;&lt;img alt=&#34;知识共享许可协议&#34; style=&#34;border-width:0&#34; src=&#34;https://geekzzy.github.io/img/404.jpg&#34; /&gt;&lt;/a&gt;&lt;br /&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。</copyright>
-    <lastBuildDate>Tue, 13 Aug 2019 09:39:50 +0000</lastBuildDate><atom:link href="https://geekzzy.github.io/categories/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;&lt;img alt=&#34;知识共享许可协议&#34; style=&#34;border-width:0&#34; src=&#34;/img/404.jpg&#34; /&gt;&lt;/a&gt;&lt;br /&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。</copyright>
+    <lastBuildDate>Tue, 13 Aug 2019 09:39:50 +0000</lastBuildDate><atom:link href="/categories/mysql/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>任意读写漏洞</title>
-      <link>https://geekzzy.github.io/post/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E/</link>
+      <link>/posts/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E/</link>
       <pubDate>Tue, 13 Aug 2019 09:39:50 +0000</pubDate>
       
-      <guid>https://geekzzy.github.io/post/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E/</guid>
-      <description>&lt;p&gt;小窗风雨，从今便忆，中夜笑谈清软。&lt;br&gt;
-啼鸦衰柳自无聊，更管得、离人肠断。&lt;br&gt;
-诗书事业，青毡犹在，头上貂蝉会见。&lt;br&gt;
-莫贪风月卧江湖，道日近、长安路远。&lt;/p&gt;</description>
+      <guid>/posts/mysql%E8%AF%BB%E5%86%99%E6%BC%8F%E6%B4%9E/</guid>
+      <description></description>
     </item>
     
     <item>
       <title>Bases</title>
-      <link>https://geekzzy.github.io/post/mysql-bases/</link>
+      <link>/posts/mysql-bases/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://geekzzy.github.io/post/mysql-bases/</guid>
+      <guid>/posts/mysql-bases/</guid>
       <description>&lt;p&gt;满堂花醉三千客，一剑霜寒十四州&lt;/p&gt;</description>
     </item>
     

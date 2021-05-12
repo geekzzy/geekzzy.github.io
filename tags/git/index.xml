@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on Zhangzhiyang的博客</title>
+    <link>/tags/git/</link>
+    <description>Recent content in Git on Zhangzhiyang的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;&lt;img alt=&#34;知识共享许可协议&#34; style=&#34;border-width:0&#34; src=&#34;/img/404.jpg&#34; /&gt;&lt;/a&gt;&lt;br /&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。</copyright>
+    <lastBuildDate>Sun, 25 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git</title>
+      <link>/posts/git/</link>
+      <pubDate>Sun, 25 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/git/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

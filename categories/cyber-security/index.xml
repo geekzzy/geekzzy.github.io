@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>cyber-security on Zhangzhiyang的博客</title>
-    <link>https://geekzzy.github.io/categories/cyber-security/</link>
+    <link>/categories/cyber-security/</link>
     <description>Recent content in cyber-security on Zhangzhiyang的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;&lt;img alt=&#34;知识共享许可协议&#34; style=&#34;border-width:0&#34; src=&#34;https://geekzzy.github.io/img/404.jpg&#34; /&gt;&lt;/a&gt;&lt;br /&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。</copyright>
-    <lastBuildDate>Wed, 11 Nov 2020 02:00:00 +0000</lastBuildDate><atom:link href="https://geekzzy.github.io/categories/cyber-security/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;&lt;img alt=&#34;知识共享许可协议&#34; style=&#34;border-width:0&#34; src=&#34;/img/404.jpg&#34; /&gt;&lt;/a&gt;&lt;br /&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。</copyright>
+    <lastBuildDate>Wed, 11 Nov 2020 02:00:00 +0000</lastBuildDate><atom:link href="/categories/cyber-security/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SSh</title>
-      <link>https://geekzzy.github.io/post/ssh-protocal/</link>
+      <link>/posts/ssh-protocal/</link>
       <pubDate>Wed, 11 Nov 2020 02:00:00 +0000</pubDate>
       
-      <guid>https://geekzzy.github.io/post/ssh-protocal/</guid>
+      <guid>/posts/ssh-protocal/</guid>
       <description>&lt;p&gt;红藕香残玉簟秋。轻解罗裳，独上兰舟。&lt;br&gt;
 云中谁寄锦书来，雁字回时，月满西楼。&lt;br&gt;
 花自飘零水自流。一种相思，两处闲愁。&lt;br&gt;
@@ -22,19 +22,19 @@
     
     <item>
       <title>Msfconsole</title>
-      <link>https://geekzzy.github.io/post/msf/</link>
+      <link>/posts/msf/</link>
       <pubDate>Tue, 13 Aug 2019 09:39:50 +0000</pubDate>
       
-      <guid>https://geekzzy.github.io/post/msf/</guid>
+      <guid>/posts/msf/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Nmap manual</title>
-      <link>https://geekzzy.github.io/post/nmap-munal/</link>
+      <link>/posts/nmap-munal/</link>
       <pubDate>Tue, 13 Aug 2019 09:39:50 +0000</pubDate>
       
-      <guid>https://geekzzy.github.io/post/nmap-munal/</guid>
+      <guid>/posts/nmap-munal/</guid>
       <description>&lt;p&gt;雄关漫道真如铁，&lt;br&gt;
 而今迈步从头越。&lt;br&gt;
 从头越，&lt;br&gt;
@@ -44,35 +44,29 @@
     
     <item>
       <title>SQL_injection</title>
-      <link>https://geekzzy.github.io/post/sql-injection/</link>
+      <link>/posts/sql-injection/</link>
       <pubDate>Tue, 13 Aug 2019 09:39:50 +0000</pubDate>
       
-      <guid>https://geekzzy.github.io/post/sql-injection/</guid>
-      <description>&lt;p&gt;东风夜放花千树，更吹落，星如雨。&lt;br&gt;
-宝马雕车香满路。凤箫声动，玉壶光转，一夜鱼龙舞。&lt;br&gt;
-蛾儿雪柳黄金缕。笑语盈盈暗香去。&lt;br&gt;
-众里寻他千百度。蓦然回首，那人却在，灯火阑珊处。&lt;/p&gt;</description>
+      <guid>/posts/sql-injection/</guid>
+      <description></description>
     </item>
     
     <item>
       <title>Sqlmap manual</title>
-      <link>https://geekzzy.github.io/post/sqlmap/</link>
+      <link>/posts/sqlmap/</link>
       <pubDate>Tue, 13 Aug 2019 09:39:50 +0000</pubDate>
       
-      <guid>https://geekzzy.github.io/post/sqlmap/</guid>
-      <description>&lt;p&gt;抛掷南阳为主忧，北征东讨尽良筹。&lt;br&gt;
-时来天地皆同力，运去英雄不自由。&lt;br&gt;
-千里山河轻孺子，两朝冠剑恨谯周。&lt;br&gt;
-唯馀岩下多情水，犹解年年傍驿流。&lt;/p&gt;</description>
+      <guid>/posts/sqlmap/</guid>
+      <description></description>
     </item>
     
     <item>
       <title>File_upload</title>
-      <link>https://geekzzy.github.io/post/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</link>
+      <link>/posts/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://geekzzy.github.io/post/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</guid>
-      <description>0x00 Base linux 大小写严格区分 windows 以./[空格]结尾的文件，windows默认会去除 ./[空格] ::$DATA后的数据会当作文件流处理 extension MIME header jpg image/jpeg FFD8FF png image/png 89504E47</description>
+      <guid>/posts/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</guid>
+      <description></description>
     </item>
     
   </channel>
