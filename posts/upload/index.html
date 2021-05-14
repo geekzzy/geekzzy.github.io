@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Fileupload | Zhangzhiyang的博客</title>
+
+    
+<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+
+
+
+<meta name="author" content="Zhang zhiyang" />
+<meta name="description" content="文件上传漏洞
+" />
+
+
+
+<meta name="generator" content="Hugo 0.76.3" />
+
+<link rel="canonical" href="/posts/upload/" />
+
+
+<meta property="og:title" content="Fileupload" />
+<meta property="og:description" content="文件上传漏洞" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/upload/" />
+<meta property="og:image" content="/img/young.jpg" />
+
+
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/img/young.jpg"/>
+
+<meta name="twitter:title" content="Fileupload"/>
+<meta name="twitter:description" content="文件上传漏洞"/>
+
+
+<link rel="stylesheet" href="/css/semantic.min.css" />
+<link rel="stylesheet" href="/css/icomoon.css" />
+<link rel="stylesheet" href="/css/OverlayScrollbars.min.css" />
+<link rel="stylesheet" href="/css/github-markdown.css" />
+<link rel="stylesheet" href="/css/site.css" />
+
+
+<style>
+  a {
+    color: seagreen !important;
+  }
+</style>
+
+
+
+<style>
+  .inverted a {
+     color: darkseagreen !important;
+  }
+</style>
+
+
+
+<style>
+  body {
+    
+      background-color: #ccc;
+    
+    
+      background-image: url(/me/background-dark.jpg);
+    
+  }
+</style>
+
+
+    
+
+
+  
+    <link rel="stylesheet" data-highlight href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/gruvbox-light.min.css" />
+  
+
+
+
+
+
+  </head>
+
+  <body>
+    
+<nav class="ui secondary inverted menu dream-menu">
+
+  <div class="item">
+    <i class="large link bullseye icon dream-flip-toggle" title="Flip it!"></i>
+  </div>
+  <div class="item">
+    <i class="large link home icon" title="Home" onclick="window.location.href = ''"></i>
+  </div>
+  <div class="item">
+    <i class="large link icon theme-switch" onclick="themeSwitch()"></i>
+  </div>
+  
+  <div class="item">
+    <i class="large link search icon" onclick="toggleSearch()"></i>
+  </div>
+  
+</nav>
+
+    <div class="flip-container">
+      <div class="flipper">
+        <section class="front">
+          <div class="dream-max-width">
+            
+<div class="ui centered relaxed grid dream-grid">
+  <div class="sixteen wide mobile sixteen wide tablet twelve wide computer column markdown-body dream-single" id="dream-save-post-as-img">
+    
+    <section class="ui top attached segment cover">
+      <div class="cover-img" style="background-image: url(/img/young.jpg);"></div>
+    </section>
+    
+    <section class="ui attached segment">
+      <header>
+        <h1 class="ui large header">
+          Fileupload
+          <div class="sub header">
+            @
+            
+              Zhang zhiyang
+            
+
+            · 
+                Monday, Jan 1, 0001
+              
+
+            · 2 minute read
+
+            · Update at
+              
+                Monday, Jan 1, 0001
+              
+          </div>
+        </h1>
+      </header>
+
+      <article style="margin-top: 2rem;"><p>文件上传漏洞</p>
+<h2 id="0x00-base">0x00 Base</h2>
+<h3 id="linux">linux</h3>
+<ul>
+<li>大小写严格区分</li>
+</ul>
+<h3 id="windows">windows</h3>
+<ul>
+<li>以<code>.</code>/<code>[空格]</code>结尾的文件，windows默认会去除 <code>.</code>/<code>[空格]</code></li>
+<li><code>::$DATA</code>后的数据会当作文件流处理</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>extension</th>
+<th>MIME</th>
+<th>header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jpg</td>
+<td>image/jpeg</td>
+<td>FFD8FF</td>
+</tr>
+<tr>
+<td>png</td>
+<td>image/png</td>
+<td>89504E47</td>
+</tr>
+<tr>
+<td>gif</td>
+<td>image/gif</td>
+<td>47494638</td>
+</tr>
+</tbody>
+</table>
+<pre><code>copy a.jpg/b(binary) + b.txt/a(ascii) demo.jpg  //合成图片马
+&lt;html&gt;           //一个简单的上传网页
+&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;上传测试&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+	&lt;form action=&quot;&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+    &lt;label for=&quot;file&quot;&gt;文件名：&lt;/label&gt;
+    &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;&lt;br&gt;
+    &lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;提交&quot;&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+&lt;?php
+$tmp_path=$_FILES['file']['tmp_name'];
+$name=$_FILES['file']['name'];
+if(!$_FILES['file']['error']){
+    $upload=move_uploaded_file($tmp_path,&quot;upload/$name&quot;);
+    if($upload){
+        echo '上传成功';
+    }  
+}
+</code></pre><h2 id="0x01-00截断">0x01 00截断</h2>
+<blockquote>
+<p>00截断中的00是指ascii(0)这个字符，编码为%00和0x00</p>
+</blockquote>
+<ul>
+<li>php version&lt;=5.3.4</li>
+<li>magic_quotes_gpc=off(转义特殊字符)</li>
+</ul>
+<h2 id="0x02-extension">0x02 extension</h2>
+<table>
+<thead>
+<tr>
+<th>language</th>
+<th>extension</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>asp</td>
+<td>asp,aspx,asa,asax,ascx,ashx,asmx,cer,aSp,aSpx,aSa,aSax,aScx,aShx,aSmx,cEr</td>
+</tr>
+<tr>
+<td>php</td>
+<td>php,php5,php4,php3,php2,pHp,pHp5,pHp4,pHp3,pHp2,html,htm,phtml,pht,Html,Htm,pHtml</td>
+</tr>
+<tr>
+<td>jsp</td>
+<td>jsp,jspa,jspx,jsw,jsv,jspf,jtml,jSp,jSpx,jSpa,jSw,jSv,jSpf,jHtml</td>
+</tr>
+</tbody>
+</table>
+<h2 id="0x03-image-check-function">0x03 Image check function</h2>
+<p><code>getimagesize(local|url)</code>：通过文件头检测文件的格式和大小</p>
+<p><code>exif_imagetype(local|url)</code>{php_exif}：检测格式</p>
+<ul>
+<li>jpg:不知道</li>
+<li>png:前八位字节(<code>8950 4E47 0D0A 1A0A</code>)</li>
+<li>gif:前四位字节(GIFa)</li>
+</ul>
+<p>load image{php_GD}</p>
+<p>需声明图片文件 <code>header(&quot;content-type:image/jpeg&quot;)</code></p>
+<ul>
+<li>imagecreatefromjpeg(local|url)/imagejpeg($resource,)</li>
+<li>imagecreatefrompng(local|url)/imagepng( $resource,filename)</li>
+<li>imagecreatefromgif(local|url)/imagegif( $resource,filename)</li>
+</ul>
+<h2 id="0x04-webserver">0x04 Webserver</h2>
+<h3 id="1iis-60解析漏洞">1.IIS 6.0解析漏洞:</h3>
+<ul>
+<li><code>.asp</code>结尾的文件夹，里面任意文件当作asp执行</li>
+<li><code>;</code>截断后面字符</li>
+</ul>
+<h3 id="2iis-70畸形解析漏洞同nginx">2.IIS 7.0畸形解析漏洞:同nginx</h3>
+<h3 id="2apache">2.Apache</h3>
+<ul>
+<li>apache自右向左解析文件，不支持解析的会直接跳过寻找下一个支持的</li>
+<li>%0a(CVE-2017-15715)</li>
+<li>.htaccess：apache的配置文件</li>
+</ul>
+<pre><code>SetHandler application/x-httpd-php   //将所有文件都当作php执行
+</code></pre><h3 id="3nginx">3.Nginx</h3>
+<ul>
+<li>畸形解析漏洞:文件后加'/.<extension>'，<code>1.jpg/.php</code>=<code>1.php</code></li>
+<li>未经编码的空格和截至符(/0)&mdash;(CVE-2013-4547)</li>
+</ul></article>
+    </section>
+
+    <footer class="ui attached segment dream-tags" data-html2canvas-ignore>
+      
+        
+          <a class="ui label" href="/tags/cyber" title="cyber">cyber</a>
+        
+          <a class="ui label" href="/tags/php" title="php">php</a>
+        
+      
+      <div
+        class="ui label"
+        style="float: right; cursor: pointer;"
+        onclick="savePostAsImg()">
+        <i class="save icon"></i>Save as image
+      </div>
+    </footer>
+
+    
+      <footer class="ui attached segment" data-html2canvas-ignore>
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="/img/404.jpg" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。
+      </footer>
+    
+
+    
+      <footer class="ui bottom attached stacked segment post-disqus-area" data-html2canvas-ignore>
+        <div id="disqus_thread"></div>
+        <script>
+          
+
+
+          var disqus_config = function () {
+            this.page.url = '\/posts\/upload\/';  
+            this.page.identifier = '\/posts\/upload\/'; 
+          };
+
+          (function() { 
+            var d = document, s = d.createElement('script');
+            s.src = 'https://' + 'g1eny0ung' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </footer>
+    
+    
+    
+      <div class="ui segment utterances-comments" data-html2canvas-ignore>
+        <script src="https://utteranc.es/client.js"
+          repo="geekzzy/geekzzy.github.io"
+          issue-term="og:title"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+        </script>
+      </div>
+    
+
+    
+
+  </div>
+  <div class="sixteen wide mobile sixteen wide tablet four wide computer column">
+    <article class="dream-header">
+  <section class="ui top attached center aligned segment">
+    <div class="ui small circular image">
+      
+        <img src="/img/404.jpg">
+      
+    </div>
+
+    
+    <div class="ui medium header">Zhang zhiyang&#39;s blog<div class="sub header" style="margin-top: 0.5rem;">不过是些许风霜罢了</div>
+    </div>
+    
+
+    <div class="ui horizontal list">
+      
+      <a class="item" href="/posts">
+        <i class="archive icon" title="Archives"></i>
+      </a>
+      
+      <a class="item" href="/tags">
+        <i class="tags icon" title="All Tags"></i>
+      </a>
+      <a class="item" href="/categories">
+        <i class="th list icon" title="All Categories"></i>
+      </a>
+    </div>
+  </section>
+
+  
+  <section class="ui attached center aligned segment dream-tags">
+    
+      <a class="ui label" href="/tags/cyber" title="cyber">cyber</a>
+    
+      <a class="ui label" href="/tags/linux" title="linux">linux</a>
+    
+      <a class="ui label" href="/tags/markdown" title="markdown">markdown</a>
+    
+      <a class="ui label" href="/tags/math" title="math">math</a>
+    
+      <a class="ui label" href="/tags/mysql" title="mysql">mysql</a>
+    
+      <a class="ui label" href="/tags/php" title="php">php</a>
+    
+      <a class="ui label" href="/tags/python" title="python">python</a>
+    
+      <a class="ui label" href="/tags/tool" title="tool">tool</a>
+    
+  </section>
+  
+
+  
+  <section class="ui attached segment dream-categories">
+    <div class="ui accordion">
+      
+      
+      
+      
+      
+
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/cyber" class="item">cyber</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/mysqlreadwritevul/" class="item">MysqlReadWriteVul</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/php%E4%B8%80%E4%BA%9B%E5%BC%B1%E8%AF%AD%E6%B3%95/" class="item">php黑魔法(弱语法)</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/sqlinjection/" class="item">SQLInjection</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="item">伪协议与文件包含</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/upload/" class="item">Fileupload</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/linux" class="item">linux</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/linuxdir/" class="item">folder</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/linuxtools/" class="item">linuxtool</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/markdown" class="item">markdown</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/markdown/" class="item">markdown数学表达式</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/math" class="item">math</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/%E4%B8%8D%E5%AE%9A%E7%A7%AF%E5%88%86/" class="item">不定积分</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/%E6%97%A0%E7%A9%B7%E7%BA%A7%E6%95%B0/" class="item">无穷级数</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/mysql" class="item">mysql</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/mysqlreadwritevul/" class="item">MysqlReadWriteVul</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/mysql/" class="item">Mysql</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/php" class="item">php</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/php%E4%B8%80%E4%BA%9B%E5%BC%B1%E8%AF%AD%E6%B3%95/" class="item">php黑魔法(弱语法)</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/sqlinjection/" class="item">SQLInjection</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="item">伪协议与文件包含</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/upload/" class="item">Fileupload</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/" class="item">前后端分离</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/python" class="item">python</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/classobject/" class="item">Class&amp;&amp;Object</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/pyfunction/" class="item">PyFunction</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/tool" class="item">tool</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/git/" class="item">Git</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/linuxtools/" class="item">linuxtool</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/msf/" class="item">Msfconsole</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/nmap/" class="item">Nmap</a>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/sqlmap/" class="item">Sqlmap</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+
+      
+    </div>
+  </section>
+  
+
+  <section class="ui attached segment header-socials">
+    <nav class="ui secondary menu dream-menu dream-socials">
+  
+    <div class="item">
+      <a href="/index.xml">
+        <i class=" rss square icon" title="RSS"></i>
+      </a>
+    </div>
+  
+  
+    <div class="item">
+      <a href="mailto:2940854309@qq.com">
+        <i class=" mail icon" title="Email"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://twitter.com/g1eny0ung" target="_blank">
+        <i class=" twitter icon" title="Twitter"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://facebook.com/g1eny0ung" target="_blank">
+        <i class=" facebook icon" title="Facebook"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://instagram.com/g1eny0ung" target="_blank">
+        <i class=" instagram icon" title="Instagram"></i>
+      </a>
+    </div>
+  
+
+  
+
+  
+    <div class="item">
+      <a href="https://www.linkedin.com/in/g1eny0ung" target="_blank">
+        <i class=" linkedin icon" title="Linkedin"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://github.com/g1eny0ung" target="_blank">
+        <i class=" github icon" title="GitHub"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://www.stackoverflow.com/users/5676489/g1eny0ung" target="_blank">
+        <i class=" stack overflow icon" title="StackOverflow"></i>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+  </section>
+
+  <section class="ui bottom attached center aligned segment">
+    
+      <p>© 2016 - 2021 Zhangzhiyang的博客</p>
+    
+
+    <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/g1eny0ung/hugo-theme-dream" target="_blank">Dream</a>.</p>
+
+    
+      <p>我听别人说这世界上有一种鸟是没有脚的，它只能够一直的飞呀飞呀，飞累了就在风里面睡觉，这种鸟一辈子只能下地一次，那一次就是它死亡的时候。</p>
+    
+  </section>
+  <script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+</article>
+
+  </div>
+</div>
+
+          </div>
+        </section>
+        <section class="back">
+          <div class="dream-max-width">
+            <div class="ui centered relaxed grid dream-grid dream-back">
+  
+  
+  
+    <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+      <article>
+        <div class="ui top attached segment">
+          <h3 class="ui header">日程</h3>
+        </div>
+        <div class="ui bottom attached segment markdown-body">
+          <p>Zhangzhiyang的 ❤️ 博客</p>
+
+        </div>
+      </article>
+    </section>
+  
+    <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+      <article>
+        <div class="ui top attached segment">
+          <h3 class="ui header">我的一些开源项目</h3>
+        </div>
+        <div class="ui bottom attached segment markdown-body">
+          <ul>
+<li><a href="https://github.com/ilime/Petal">Petal 🌺</a> ➡️ <a href="https://douban.fm/">豆瓣 FM</a> 桌面版</li>
+<li><a href="https://github.com/g1eny0ung/hugo-theme-dream">hugo-theme-dream 🌱</a> ➡️ <a href="https://gohugo.io">HUGO</a> 的博客主题，当然，也是你现在看到的博客主题</li>
+<li><a href="https://github.com/g1eny0ung/Alfred-Colors-workflow">Alfred-Colors-workflow</a> ➡️ Alfred 插件：CSS 颜色格式转换 hex &lt;=&gt; rgb &lt;=&gt; hsl</li>
+<li><a href="https://github.com/g1eny0ung/github-colorful-contributions-graph">github-colorful-contributions-graph</a> ➡️ 改变 GitHub 贡献面板颜色的 Chrome 插件</li>
+<li><a href="https://github.com/dayjs/day.dart">day.dart</a> ➡️ ⏰ Day.js in dart.</li>
+</ul>
+<p><a href="https://github.com/g1eny0ung">等等等等</a></p>
+
+        </div>
+      </article>
+    </section>
+  
+    <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+      <article>
+        <div class="ui top attached segment">
+          <h3 class="ui header">其他</h3>
+        </div>
+        <div class="ui bottom attached segment markdown-body">
+          <p>如果你喜欢我的开源项目或者它们可以给你带来帮助，可以赏一杯咖啡 ☕ 给我。~</p>
+<p>If you like my open source projects or they can help you. You can <a href="/posts/buy-me-a-coffee">buy me a coffee ☕</a>.~</p>
+<blockquote>
+<p>PayPal</p>
+</blockquote>
+<p><a href="https://paypal.me/g1eny0ung">https://paypal.me/g1eny0ung</a></p>
+<blockquote>
+<p>Patreon</p>
+</blockquote>
+<p><a href="https://www.patreon.com/bePatron?u=42327574" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script></p>
+<blockquote>
+<p>微信赞赏码</p>
+</blockquote>
+<p><img class="ui image" src="/me/微信赞赏码.jpeg" alt="wechat" /></p>
+<blockquote>
+<p>最好附加一下信息或者留言，方便我可以<a href="/posts/buy-me-a-coffee">将捐助记录 📝 下来</a>，十分感谢 🙏。</p>
+<p>It is better to attach some information or leave a message so that I can <a href="/posts/buy-me-a-coffee">record the donation 📝</a>, thank you very much 🙏.</p>
+</blockquote>
+
+        </div>
+      </article>
+    </section>
+  
+
+  <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+    <article>
+      <div class="ui top attached segment">
+        <h3 class="ui header">Social Links</h3>
+      </div>
+      <div class="ui bottom attached segment">
+        <nav class="ui secondary menu dream-menu dream-socials">
+  
+    <div class="item">
+      <a href="/index.xml">
+        <i class="large rss square icon" title="RSS"></i>
+      </a>
+    </div>
+  
+  
+    <div class="item">
+      <a href="mailto:2940854309@qq.com">
+        <i class="large mail icon" title="Email"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://twitter.com/g1eny0ung" target="_blank">
+        <i class="large twitter icon" title="Twitter"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://facebook.com/g1eny0ung" target="_blank">
+        <i class="large facebook icon" title="Facebook"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://instagram.com/g1eny0ung" target="_blank">
+        <i class="large instagram icon" title="Instagram"></i>
+      </a>
+    </div>
+  
+
+  
+
+  
+    <div class="item">
+      <a href="https://www.linkedin.com/in/g1eny0ung" target="_blank">
+        <i class="large linkedin icon" title="Linkedin"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://github.com/g1eny0ung" target="_blank">
+        <i class="large github icon" title="GitHub"></i>
+      </a>
+    </div>
+  
+
+  
+    <div class="item">
+      <a href="https://www.stackoverflow.com/users/5676489/g1eny0ung" target="_blank">
+        <i class="large stack overflow icon" title="StackOverflow"></i>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+      </div>
+    </article>
+  </section>
+
+  <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+    
+      <footer class="ui segment">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="/img/404.jpg" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。
+      </footer>
+    
+  </section>
+
+  
+  
+</div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script>
+  window.darkNav =  true 
+  window.hasTwitterEmbed =  true 
+
+  if (window.hasTwitterEmbed) {
+    
+    window.twttr = (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {}
+      if (d.getElementById(id)) return t
+      js = d.createElement(s)
+      js.id = id
+      js.src = 'https://platform.twitter.com/widgets.js'
+      fjs.parentNode.insertBefore(js, fjs)
+
+      t._e = []
+      t.ready = function (f) {
+        t._e.push(f)
+      }
+
+      return t
+    })(document, 'script', 'twitter-wjs')
+  }
+</script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/semantic.min.js"></script>
+<script src="/js/jquery.overlayScrollbars.min.js"></script>
+<script src="/js/header.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/theme.js"></script>
+
+    
+<script src="/js/html2canvas.min.js"></script>
+<script src="/js/post.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js"></script>
+
+  
+    
+      <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/languages/ocaml.min.js"></script>
+     
+  
+
+  <script>
+  hljs.initHighlightingOnLoad()
+  setHighlightTheme()
+
+  function setHighlightTheme() {
+    var isDark = localStore.getItem('hugo-theme-dream-is-dark')
+    var lightTheme = "gruvbox-light"
+    var darkTheme = "gruvbox-dark"
+    var theme = isDark ? darkTheme : lightTheme
+
+    $('link[data-highlight]').attr('href', 'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/' + theme + '.min.css')
+    $('pre').css('background', isDark ? '#333' : '')
+  }
+</script>
+
+
+
+
+
+    
+      <div class="ui inverted segment" id="dream-search">
+  <div class="ui search">
+    <div class="ui transparent input">
+      <input class="prompt" type="text" placeholder="Search" />
+    </div>
+    <div class="results"></div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $.getJSON('/index.json', function (data) {
+      $('.ui.search').search({
+        source: data,
+        searchFields: ['title'],
+        showNoResults: true,
+      })
+    })
+  })
+</script>
+<script src="/js/search.js"></script>
+
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98295641-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </body>
+</html>

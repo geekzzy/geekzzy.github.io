@@ -1,25 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>namp on 乐此不疲</title>
-    <link>/tags/namp/</link>
-    <description>Recent content in namp on 乐此不疲</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;&lt;img alt=&#34;知识共享许可协议&#34; style=&#34;border-width:0&#34; src=&#34;/img/404.jpg&#34; /&gt;&lt;/a&gt;&lt;br /&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。</copyright>
-    <lastBuildDate>Tue, 13 Aug 2019 09:39:50 +0000</lastBuildDate><atom:link href="/tags/namp/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Nmap munal</title>
-      <link>/post/nmap-munal/</link>
-      <pubDate>Tue, 13 Aug 2019 09:39:50 +0000</pubDate>
-      
-      <guid>/post/nmap-munal/</guid>
-      <description>0x00 Target基础用法(&amp;lt;ip|域名&amp;gt;)
-nmap 192.168.1.1nmap www.baidu.com扫描任意网段ip
-nmap 192.168.1.1-255nmap 192.168.1.*nmap 192.168.1.0/24多目标扫描(-iL &amp;lt;localfile&amp;gt;)
-nmap 192.168.1.1 www.baidu.comnmap -iL scan.txt(将扫描目标写入) 随机选择目标(iR &amp;lt;hostnum&amp;gt;)
- nmap -iR 00x01 Paramter 扫描方式(protocol)-sT:使用Tcp扫描-sS:SYN半开放隐蔽扫描 -sP:使用ping 扫描 -sU:使用Udp扫描 -sR:使用rpc扫描扫描参数Port-r:顺序扫描端口 -p:指定端口扫描，指定多个端口需要用逗号间隔-F:快速端口扫描，常用的1200多个端口 --allports:全端口扫描 Version--version-intensity &amp;lt;level&amp;gt;: &amp;nbsp;设置版本扫描强度(default 7)--version-light(--version-intensity 2):轻量级扫描模式--version-all(--version-intensity 9): 重量级扫描模式 --version-trace:跟踪版本扫描活动OS -O:显示系统探测信息  --osscan-limit:针对指定的目标进行操作系统检测 --osscan-guess:猜测操作系统检测结果(无法准确检测时)Scan-A:综合扫描(复合参数),包含(-O，-script，-sV等)-sV:扫描端口服务信息与版本号 -P0/-PN:不使用ping扫描-v:显示扫描详细信息，-vv--exculde &amp;lt;*host&amp;gt;:排除某个ip或域名</description>
-    </item>
-    
-  </channel>
-</rss>
