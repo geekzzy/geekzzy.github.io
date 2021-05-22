@@ -63,7 +63,7 @@
   </url>
   
   <url>
-    <loc>/posts/linuxdir/</loc>
+    <loc>/posts/folder/</loc>
     <lastmod>2020-11-11T02:00:00+00:00</lastmod>
   </url>
   
@@ -88,7 +88,7 @@
   </url>
   
   <url>
-    <loc>/posts/regularexpression/</loc>
+    <loc>/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
     <lastmod>2020-11-11T02:00:00+00:00</lastmod>
   </url>
   
@@ -108,7 +108,7 @@
   </url>
   
   <url>
-    <loc>/posts/markdown/</loc>
+    <loc>/posts/markdown%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F/</loc>
     <lastmod>2020-01-01T09:39:50+00:00</lastmod>
   </url>
   
@@ -153,11 +153,6 @@
   </url>
   
   <url>
-    <loc>/posts/nmap/</loc>
-    <lastmod>2019-08-13T09:39:50+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/php/</loc>
     <lastmod>2019-08-13T09:39:50+00:00</lastmod>
   </url>
@@ -193,15 +188,11 @@
   </url>
   
   <url>
-    <loc>/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
-  </url>
-  
-  <url>
     <loc>/posts/edusrc/</loc>
   </url>
   
   <url>
-    <loc>/posts/upload/</loc>
+    <loc>/posts/fileupload/</loc>
   </url>
   
   <url>
@@ -218,6 +209,14 @@
   
   <url>
     <loc>/posts/mysql/</loc>
+  </url>
+  
+  <url>
+    <loc>/posts/nmap/</loc>
+  </url>
+  
+  <url>
+    <loc>/posts/regularexpression/</loc>
   </url>
   
   <url>
