@@ -142,13 +142,17 @@
         </h1>
       </header>
 
-      <article style="margin-top: 2rem;"><h2 id="操作分支">操作分支</h2>
+      <article style="margin-top: 2rem;"><h2 id="branch">branch</h2>
 <p>创建分支</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">git branch dev
-</code></pre></div><p>查看本地分支：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">git branch
-</code></pre></div><p>注:名称前面加* 号的是当前的分支</p>
-<p>查看远程分支：</p>
+</code></pre></div><p>推送本地分支</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git push origin &lt;branch&gt;
+</code></pre></div><p>查看本地分支：
+注:名称前面加* 号的是当前的分支</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">$ git branch
+  dev
+* master
+</code></pre></div><p>查看远程分支：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">git branch -r
 git branch -a
 </code></pre></div><p>切换分支</p>
@@ -157,7 +161,7 @@ git branch -a
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">git branch -d dev
 </code></pre></div><p>删除远程分支</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">git branch -r -d origin/dev
-</code></pre></div><h2 id="本地分支与远程分支">本地分支与远程分支</h2>
+</code></pre></div><h3 id="本地branch与远程branch">本地branch与远程branch</h3>
 <p>远程新建了一个分支，本地没有该分支。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">git checkout --track origin/dev
 </code></pre></div><p>这时本地会新建一个分支名叫<code>dev</code> ，会自动跟踪远程的同名分支<code>dev</code>。</p>
@@ -165,7 +169,7 @@ git branch -a
 这时候 push 和 pull 指令就无法确定该跟踪谁，一般来说我们都会使其跟踪远程同名分支</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">git push --set-upstream origin dev
 </code></pre></div><p>这样就可以自动在远程创建一个<code>dev</code>分支，然后本地分支会 track 该分支。后面再对该分支使用 push 和 pull 就自动同步。</p>
-<h2 id="合并分支">合并分支</h2>
+<h3 id="合并branch">合并branch</h3>
 <p>首先切换到master分支上</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">git  checkout master
 </code></pre></div><p>如果是多人开发的话 需要把远程master上的代码pull下来</p>
@@ -174,6 +178,23 @@ git branch -a
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">git  merge dev
 </code></pre></div><p>然后查看状态</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">git status
+</code></pre></div><h2 id="tag">tag</h2>
+<p>会将推送的文件进行压缩</p>
+<ul>
+<li>创建tag</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git tag &lt;tag&gt;
+</code></pre></div><ul>
+<li>推送本地tag</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git push origin &lt;tag&gt;
+</code></pre></div><h2 id="release">release</h2>
+<p>github中创建，一般是编译好的文件</p>
+<h2 id="remote">remote</h2>
+<p>查看远程分支和推送路径</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git remote -v
+origin  git@github.com:geekzzy/geekzzy.github.io.git <span style="color:#f92672">(</span>fetch<span style="color:#f92672">)</span>
+origin  git@github.com:geekzzy/geekzzy.github.io.git <span style="color:#f92672">(</span>push<span style="color:#f92672">)</span>
 </code></pre></div></article>
     </section>
 
@@ -278,6 +299,8 @@ git branch -a
       <a class="ui label" href="/tags/php" title="php">php</a>
     
       <a class="ui label" href="/tags/python" title="python">python</a>
+    
+      <a class="ui label" href="/tags/%E5%89%8D%E7%AB%AF" title="前端">前端</a>
     
   </section>
   
@@ -515,6 +538,26 @@ git branch -a
               <div class="item">
                 <div class="content">
                   <a href="/posts/python/regularexpression/" class="item">RegularExpression</a>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        
+      
+        
+
+        
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <a href="/categories/%E5%89%8D%E7%AB%AF" class="item">前端</a>
+          </div>
+          <div class="content">
+            <div class="ui list">
+            
+              <div class="item">
+                <div class="content">
+                  <a href="/posts/%E5%89%8D%E7%AB%AF/axios.post/" class="item">axios.post</a>
                 </div>
               </div>
             

@@ -48,12 +48,21 @@
     </item>
     
     <item>
-      <title>不定积分</title>
-      <link>/posts/%E4%B8%8D%E5%AE%9A%E7%A7%AF%E5%88%86/</link>
-      <pubDate>Tue, 13 Aug 2019 09:39:50 +0000</pubDate>
+      <title></title>
+      <link>/posts/php/phpclass/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/posts/%E4%B8%8D%E5%AE%9A%E7%A7%AF%E5%88%86/</guid>
-      <description>&lt;p&gt;鹏北海，凤朝阳。又携书剑路茫茫。&lt;/p&gt;</description>
+      <guid>/posts/php/phpclass/</guid>
+      <description>php面向对象 访问控制 public 可以通过$this调用public方法或属性,parent::调用父类的public方法或属性 在实例中可以能过$ob</description>
+    </item>
+    
+    <item>
+      <title>axios.post</title>
+      <link>/posts/%E5%89%8D%E7%AB%AF/axios.post/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/%E5%89%8D%E7%AB%AF/axios.post/</guid>
+      <description>&lt;p&gt;axios的post传值问题&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -211,6 +220,15 @@
       
       <guid>/posts/cyber/sshprotocal/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>不定积分</title>
+      <link>/posts/%E4%B8%8D%E5%AE%9A%E7%A7%AF%E5%88%86/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/%E4%B8%8D%E5%AE%9A%E7%A7%AF%E5%88%86/</guid>
+      <description>&lt;p&gt;鹏北海，凤朝阳。又携书剑路茫茫。&lt;/p&gt;</description>
     </item>
     
     <item>
