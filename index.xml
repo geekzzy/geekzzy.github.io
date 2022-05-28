@@ -48,15 +48,6 @@
     </item>
     
     <item>
-      <title></title>
-      <link>/posts/php/phpclass/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/php/phpclass/</guid>
-      <description>php面向对象 访问控制 public 可以通过$this调用public方法或属性,parent::调用父类的public方法或属性 在实例中可以能过$ob</description>
-    </item>
-    
-    <item>
       <title>axios.post</title>
       <link>/posts/%E5%89%8D%E7%AB%AF/axios.post/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -152,11 +143,20 @@
     
     <item>
       <title>php黑魔法</title>
+      <link>/posts/php/phpclass/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/php/phpclass/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>php黑魔法</title>
       <link>/posts/php/php%E9%BB%91%E9%AD%94%E6%B3%95/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/posts/php/php%E9%BB%91%E9%AD%94%E6%B3%95/</guid>
-      <description>php的一些语法漏洞 0x00 比较符号 == 执行关系运算时要求运算符两边的数据类型必须一致,强制转换数据类型 数字转换规则： 若字符串以数字开头，则取开头数</description>
+      <description></description>
     </item>
     
     <item>

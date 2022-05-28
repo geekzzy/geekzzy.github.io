@@ -51,10 +51,6 @@
   </url>
   
   <url>
-    <loc>/posts/php/phpclass/</loc>
-  </url>
-  
-  <url>
     <loc>/posts/%E5%89%8D%E7%AB%AF/axios.post/</loc>
   </url>
   
@@ -140,6 +136,10 @@
   
   <url>
     <loc>/categories/php/</loc>
+  </url>
+  
+  <url>
+    <loc>/posts/php/phpclass/</loc>
   </url>
   
   <url>
